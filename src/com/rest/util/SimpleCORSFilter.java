@@ -1,3 +1,6 @@
+/* Article Title: Enabling Cross Origin Requests for a RESTful Web Service
+ * Reference: http://spring.io/guides/gs/rest-service-cors/
+ */
 package com.rest.util;
 
 import java.io.IOException;

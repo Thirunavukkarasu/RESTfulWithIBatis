@@ -1,4 +1,7 @@
- 
+/* Article Title: Serializing a POJO to json using built in jersey support
+ * Reference: https://github.com/jasonray/jersey-starterkit/wiki/Serializing-a-POJO-to-json-using-built-in-jersey-support 
+ */
+
 package com.rest;
 
 import java.io.IOException;
