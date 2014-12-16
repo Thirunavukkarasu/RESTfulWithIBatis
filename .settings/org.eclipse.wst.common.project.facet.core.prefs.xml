@@ -1,0 +1,7 @@
+<root>
+  <facet id="jst.jaxrs">
+    <node name="libprov">
+      <attribute name="provider-id" value="wls-system-library-provider-jax-rs-1.1-integrated"/>
+    </node>
+  </facet>
+</root>
