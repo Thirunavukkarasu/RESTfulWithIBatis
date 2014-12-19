@@ -10,5 +10,5 @@
 			<property name="DataSource" value="jdbc/testds" />
 		</dataSource>
 	</transactionManager>
-	 <sqlMap resource="Products.xml" />
+	 <sqlMap resource="Product.xml" />
 </sqlMapConfig>

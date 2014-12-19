@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Product"> 
+<select id="selectAll" resultClass="com.pojo.Product">
+    select * from products
+</select>
+
+<select id="select" resultClass="com.pojo.Product">
+    select product_id, product_name from products where product_id = #product_id#
+</select>
+
+<insert id="insert" parameterClass="com.pojo.Product">    
+   insert into products(product_id, product_name) values (#product_id#, #product_name#)
+</insert> 
+
+<delete id="delete" parameterClass="int">
+   delete from products where  product_id = #product_id#
+</delete>
+
+<update id="update" parameterClass="com.pojo.Product">
+   update products set product_name = #product_name# where product_id = #product_id#
+</update>
+
+</sqlMap>

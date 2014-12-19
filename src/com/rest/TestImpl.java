@@ -7,6 +7,7 @@ package com.rest;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -18,10 +19,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.codehaus.jettison.json.JSONObject;
+
 import com.ibatis.common.resources.Resources;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
-import com.pojo.Products;
+import com.pojo.Product;
 
 @SuppressWarnings("unchecked")
 @Path("TestImpl")
@@ -34,49 +37,45 @@ public class TestImpl {
 	}
 	
 	@GET
-	@Path("Products")
+	@Path("SelectProduct")
 	@Produces({"application/json"})
-	public  List<Products> getProducts() throws IOException, SQLException { 
-		 List<Products> products = (List<Products>)getSqlMapClient().queryForList("Products.selectAll",null);
+	public  List<Product> getProducts() throws IOException, SQLException { 
+		 List<Product> products = (List<Product>)getSqlMapClient().queryForList("Product.selectAll",null);
 		 return products;
 	}
 	
 	@GET
-	@Path("Product/{product_id}")
+	@Path("SelectProduct/{product_id}")
 	@Produces({"application/json"})
-	public List<Products> getProduct(@PathParam("product_id") int product_id) throws IOException, SQLException { 
-		 Products product = new Products();
-		 product.setProduct_id(product_id);
-		 List<Products> listProducts = (List<Products>)getSqlMapClient().queryForList("Products.select",product);
+	public List<Product> getProduct(@PathParam("product_id") int product_id) throws IOException, SQLException { 
+		 List<Product> listProducts = (List<Product>)getSqlMapClient().queryForList("Product.select",product_id);
 		 return listProducts;
 	}
 
 	@POST
 	@Path("InsertProduct")
-	public String insertProduct() throws IOException, SQLException { 
-		 Products product = new Products();
-		 product.setProduct_id(1234);
-		 product.setProduct_name("Complan");
-		 getSqlMapClient().insert("Products.insert",product);
-		 return "Record inserted Successfully!";
+	@Produces({"application/json"})
+	@Consumes({"application/json"})
+	public List<Product> insertProduct(Product newProduct) throws IOException, SQLException {
+		 getSqlMapClient().insert("Product.insert",newProduct);
+		 return (List<Product>)getSqlMapClient().queryForList("Product.selectAll",null);
 	}
 	
 	@PUT
 	@Path("UpdateProduct/{product_id}")
-	@Produces({"text/plain"})
-	public String updateProduct(@PathParam("product_id") int product_id) throws IOException, SQLException { 
-		 Products product = new Products();
-		 product.setProduct_id(product_id);
-		 product.setProduct_name("Horlicks");
-		 getSqlMapClient().update("Products.update",product);
-		 return "Record updated Successfully!";
+	@Produces({"application/json"})
+	@Consumes({"application/json"})
+	public List<Product> updateProduct(@PathParam("product_id") int product_id,Product updatedProduct) throws IOException, SQLException { 
+		updatedProduct.setProduct_id(product_id);
+		 getSqlMapClient().update("Product.update",updatedProduct);
+		 return (List<Product>)getSqlMapClient().queryForList("Product.selectAll",null);
 	}
 	
 	@DELETE
 	@Path("DeleteProduct/{product_id}")
-	@Produces({"text/plain"})
-	public String deleteProduct(@PathParam("product_id") int product_id) throws IOException, SQLException { 
-		 getSqlMapClient().delete("Products.delete",product_id);
-		 return "Record deleted Successfully!";
+	@Produces({"application/json"})
+	public List<Product> deleteProduct(@PathParam("product_id") int product_id) throws IOException, SQLException { 
+		 getSqlMapClient().delete("Product.delete",product_id);
+		 return (List<Product>)getSqlMapClient().queryForList("Product.selectAll",null);
 	}	
 }

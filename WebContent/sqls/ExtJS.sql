@@ -24,3 +24,8 @@ product_name VARCHAR2(45) not null,
 CONSTRAINT products_pk PRIMARY KEY (product_id) );
 
 INSERT INTO Products(product_id,product_name) VALUES (2,'Complan');
+
+CREATE TABLE test_table AS
+SELECT LEVEL id,DBMS_RANDOM.string('A', 20) text_value
+FROM dual
+CONNECT BY LEVEL <= 100000;
